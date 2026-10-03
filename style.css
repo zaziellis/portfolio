@@ -1,0 +1,211 @@
+/* ---------- colors and fonts in one spot, easy to tweak ---------- */
+:root {
+  --bg: #1b2d21;        /* page background, deep forest green */
+  --card: #3a2a1e;      /* dropdown background, bark brown */
+  --ink: #ece6d6;       /* main text, soft off-white */
+  --muted: #b9bba4;     /* softer text, lichen grey-green */
+  --accent: #a8c686;    /* links and highlights, moss green */
+  --line: #5a4330;      /* thin borders, lighter brown */
+}
+
+/* border-box makes sizing less confusing */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+/* keeps everything in a readable column */
+header, main, footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------- top section ---------- */
+.top {
+  text-align: center;
+  padding-top: 56px;
+  padding-bottom: 32px;
+}
+
+.portrait {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;      /* crops the photo instead of squishing it */
+  border-radius: 50%;     /* makes it a circle */
+  border: 4px solid var(--card);
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.4rem;
+  margin: 16px 0 4px;
+}
+
+.tagline {
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+/* the two contact links sit side by side */
+.contact a { margin: 0 12px; }
+
+a { color: var(--accent); }
+
+/* ---------- dropdowns ---------- */
+.dropdown {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+summary {
+  cursor: pointer;
+  padding: 16px 20px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  list-style: none;       /* hides the default arrow */
+}
+
+/* hides the default arrow in Safari too */
+summary::-webkit-details-marker { display: none; }
+
+/* our own little arrow, flips when open */
+summary::after {
+  content: "+";
+  float: right;
+  color: var(--accent);
+}
+details[open] summary::after { content: "–"; }
+
+/* shows a clear outline when using the keyboard */
+summary:focus-visible, a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.content { padding: 0 20px 20px; }
+
+h3 {
+  font-size: 1.05rem;
+  margin: 20px 0 4px;
+}
+
+/* ---------- picture grids ---------- */
+.gallery {
+  display: grid;
+  /* as many columns as fit, each at least 180px wide */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* ---------- resume + footer ---------- */
+.resume {
+  text-align: center;
+  margin: 32px 0;
+  font-size: 1.1rem;
+}
+
+/* ---------- carousels ---------- */
+.carousel {
+  position: relative;     /* lets the arrow buttons float on top */
+  margin-top: 12px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;                 /* lets you swipe or scroll sideways */
+  scroll-snap-type: x mandatory;    /* snaps to one picture at a time */
+  scroll-behavior: smooth;
+  scrollbar-width: none;            /* hides the scrollbar (Firefox) */
+}
+.carousel-track::-webkit-scrollbar { display: none; }  /* same, for Chrome/Safari */
+
+.carousel-track img {
+  flex: 0 0 100%;                   /* each picture fills the full width */
+  height: 320px;
+  object-fit: cover;
+  border-radius: 6px;
+  scroll-snap-align: center;
+  cursor: zoom-in;
+}
+
+/* round arrow buttons on the left and right */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(27, 45, 33, 0.85);
+  color: var(--ink);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1;
+}
+.carousel-btn:hover { background: var(--bg); }
+.carousel-btn:focus-visible { outline: 3px solid var(--accent); }
+.carousel-btn.prev { left: 8px; }
+.carousel-btn.next { right: 8px; }
+
+/* each resume link gets its own line */
+.resume a {
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ---------- full-size picture popup ---------- */
+.gallery img { cursor: zoom-in; }
+
+#lightbox {
+  border: none;
+  padding: 0;
+  background: transparent;
+  max-width: 95vw;
+  max-height: 95vh;
+}
+
+/* dark see-through layer behind the big picture */
+#lightbox::backdrop { background: rgba(0, 0, 0, 0.85); }
+
+#lightbox img {
+  display: block;
+  max-width: 95vw;
+  max-height: 85vh;      /* leaves space for the caption below */
+  object-fit: contain;   /* shows the whole picture, no cropping */
+  border-radius: 6px;
+  cursor: zoom-out;
+}
+
+/* alt text shown under the big picture */
+#lightbox-caption {
+  max-width: 95vw;
+  margin: 12px 0 0;
+  text-align: center;
+  color: var(--ink);
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding-bottom: 32px;
+}
